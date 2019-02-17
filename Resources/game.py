@@ -27,14 +27,8 @@ class Player(pygame.sprite.Sprite):
  
         # Create an image of the block, and fill it with a color.
         # This could also be an image loaded from the disk.
-<<<<<<< HEAD
-        self.width = 50
-        self.height = 50
-        self.image = pygame.Surface([self.width, self.height])
-=======
         
         self.image = pygame.Surface([width, height])
->>>>>>> fc9b989b8ba482bd627959ea16b16d3f57673d71
         self.image.fill(RED)
  
         # Set a reference to the image rect.
@@ -105,18 +99,6 @@ class Player(pygame.sprite.Sprite):
         if len(platform_hit_list) > 0 or self.rect.bottom >= SCREEN_HEIGHT:
             self.change_y = -10
         
-    # Player-controlled movement:
-    def go_left(self):
-        """ Called when the user hits the left arrow. """
-        self.change_x = -6
- 
-    def go_right(self):
-        """ Called when the user hits the right arrow. """
-        self.change_x = 6
- 
-    def stop(self):
-        """ Called when the user lets off the keyboard. """
-        self.change_x = 0
     
     def duck(self):
         """ Ducks when player holds 'down' button. """
@@ -159,36 +141,6 @@ class Platform(pygame.sprite.Sprite):
  
         self.rect = self.image.get_rect()
 
-# class Level(object):
-#     """ This is a generic super-class used to define a level.
-#         Create a child class for each level with level-specific
-#         info. """
- 
-#     def __init__(self, player):
-#         """ Constructor. Pass in a handle to player. Needed for when moving platforms
-#             collide with the player. """
-#         self.platform_list = pygame.sprite.Group()
-#         self.enemy_list = pygame.sprite.Group()
-#         self.player = player
-         
-#         # Background image
-#         self.background = None
- 
-#     # Update everythign on this level
-#     def update(self):
-#         """ Update everything in this level."""
-#         self.platform_list.update()
-#         self.enemy_list.update()
- 
-#     def draw(self, screen):
-#         """ Draw everything on this level. """
- 
-#         # Draw the background
-#         screen.fill(BLUE)
- 
-#         # Draw all the sprite lists that we have
-#         self.platform_list.draw(screen)
-#         self.enemy_list.draw(screen)
  
 
 class Level(object):
@@ -240,6 +192,7 @@ class Level(object):
  
         for enemy in self.enemy_list:
             enemy.rect.x += shift_x
+
 
 # Create platforms for the level
 class Level_01(Level):
@@ -375,13 +328,6 @@ def main():
     active_sprite_list.add(player)
 
 
-
-
-
-    
-
-
-
  
     # Loop until the user clicks the close button.
     done = False
@@ -401,16 +347,6 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     player.jump()
-<<<<<<< HEAD
-
-                if event.key == pygame.K_DOWN:
-                    player.duck()
-                
- 
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_DOWN:
-                    player.unDuck()
-=======
                 if event.key == pygame.K_DOWN:
                     player.duck()
  
@@ -423,7 +359,6 @@ def main():
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_DOWN:
                     player.revert()
->>>>>>> fc9b989b8ba482bd627959ea16b16d3f57673d71
  
         # Update the player.
         active_sprite_list.update()

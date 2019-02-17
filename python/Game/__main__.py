@@ -1,54 +1,102 @@
 import pygame
 import random
-from Player import Player
 import consts
 
-
-# initialize pygame and create window
-pygame.init()
-screen = pygame.display.set_mode((consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
-pygame.display.set_caption("My Game")
-clock = pygame.time.Clock()
+from Player import Player
+from Level_01 import Level_01
 
 
-all_sprites = pygame.sprite.Group()
-player = Player()
-all_sprites.add(player)
+def main():
+    """ Main Program """
+    pygame.init()
+ 
+    # Set the height and width of the screen
+    size = [consts.SCREEN_WIDTH, consts.SCREEN_HEIGHT]
+    screen = pygame.display.set_mode(size)
+ 
+    pygame.display.set_caption("Platformer Jumper")
+ 
+    # Create the player
+    player = Player()
+ 
+    # Create all the levels
+    level_list = []
+    level_list.append( Level_01(player) )
+ 
+    # Set the current level
+    current_level_no = 0
+    current_level = level_list[current_level_no]
+ 
+    active_sprite_list = pygame.sprite.Group()
+    player.level = current_level
+ 
+    player.rect.x = 100
+    player.rect.y = consts.SCREEN_HEIGHT - player.rect.height
+    active_sprite_list.add(player)
 
-player.setPos(50 , 50)
 
-# Game loop
-running = True
-while running:
-    # keep loop running at the right speed
-    clock.tick(consts.FPS)
-    # Process input (events)
-    for event in pygame.event.get():
-        # check for closing window
-        if event.type == pygame.QUIT:
-            running = False
+ 
+    # Loop until the user clicks the close button.
+    done = False
+ 
+    # Used to manage how fast the screen updates
+    clock = pygame.time.Clock()
+ 
+    
 
-
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_DOWN:
-                player.duck()
+    # -------- Main Program Loop -----------
+    while not done:
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
+ 
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    player.jump()
+                if event.key == pygame.K_DOWN:
+                    player.duck()
+ 
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT and player.change_x < 0:
+                    player.stop()
+                if event.key == pygame.K_RIGHT and player.change_x > 0:
+                    player.stop()
             
-            if event.key == pygame.K_UP:
-                player.jump()
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_DOWN:
+                    player.revert()
+ 
+        # Update the player.
+        active_sprite_list.update()
+ 
+        # Update items in the level
+        current_level.update()
+ 
+        # If the player gets near the right side, shift the world left (-x)
+        if player.rect.right > consts.SCREEN_WIDTH:
+            player.rect.right = consts.SCREEN_WIDTH
+ 
+        # If the player gets near the left side, shift the world right (+x)
+        if player.rect.left < 0:
+            player.rect.left = 0
+ 
+        # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
+        current_level.draw(screen)
+        active_sprite_list.draw(screen)
+ 
+        # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
+ 
+        # Limit to 60 frames per second
+        clock.tick(60)
+ 
+        # Go ahead and update the screen with what we've drawn.
+        pygame.display.flip()
+ 
+    # Be IDLE friendly. If you forget this line, the program will 'hang'
+    # on exit.
+    pygame.quit()
 
-            
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_DOWN:
-                player.unDuck()
 
-    # Draw / render
-    screen.fill(consts.BLACK)
-
-    # Update
-    all_sprites.update()
-    all_sprites.draw(screen)
-
-    # *after* drawing everything, flip the display
-    pygame.display.flip()
-
-pygame.quit()
+if __name__ == "__main__":
+    main()
