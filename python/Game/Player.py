@@ -35,6 +35,7 @@ class Player(pygame.sprite.Sprite):
         # See if we hit anything
         block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
         for block in block_hit_list:
+            exit()
             # If we are moving right,
             # set our right side to the left side of the item we hit
             if self.change_x > 0:
@@ -49,7 +50,7 @@ class Player(pygame.sprite.Sprite):
         # Check and see if we hit anything
         block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
         for block in block_hit_list:
- 
+            exit()
             # Reset our position based on the top/bottom of the object.
             if self.change_y > 0:
                 self.rect.bottom = block.rect.top
@@ -85,7 +86,6 @@ class Player(pygame.sprite.Sprite):
         if len(platform_hit_list) > 0 or self.rect.bottom >= consts.SCREEN_HEIGHT:
             self.change_y = -10
         
-    
     def duck(self):
         """ Ducks when player holds 'down' button. """
         if self.rect.y <= consts.SCREEN_HEIGHT - self.rect.height:
@@ -99,7 +99,6 @@ class Player(pygame.sprite.Sprite):
 
             self.rect.x = 100
             self.rect.y = consts.SCREEN_HEIGHT - self.rect.height
-            #screen.fill(BLUE)
         
     def revert(self):
         """ Reverts to normal after ducking. """
