@@ -23,9 +23,9 @@ class Player(pygame.sprite.Sprite):
  
         # Create an image of the block, and fill it with a color.
         # This could also be an image loaded from the disk.
-        width = 50
-        height = 50
-        self.image = pygame.Surface([width, height])
+        self.width = 50
+        self.height = 50
+        self.image = pygame.Surface([self.width, self.height])
         self.image.fill(RED)
  
         # Set a reference to the image rect.
@@ -42,9 +42,6 @@ class Player(pygame.sprite.Sprite):
         """ Move the player. """
         # Gravity
         self.calc_grav()
- 
-        # Move left/right
-#        self.rect.x += self.change_x
  
         # See if we hit anything
         block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
@@ -98,19 +95,14 @@ class Player(pygame.sprite.Sprite):
         # If it is ok to jump, set our speed upwards
         if len(platform_hit_list) > 0 or self.rect.bottom >= SCREEN_HEIGHT:
             self.change_y = -10
- 
-    # Player-controlled movement:
-    def go_left(self):
-        """ Called when the user hits the left arrow. """
-        self.change_x = -6
- 
-    def go_right(self):
-        """ Called when the user hits the right arrow. """
-        self.change_x = 6
- 
-    def stop(self):
-        """ Called when the user lets off the keyboard. """
-        self.change_x = 0
+
+    
+    def duck(self):
+        self.rect.height /= 2
+
+    
+    def unDuck(self):
+        self.rect.height *= 2
  
  
 class Platform(pygame.sprite.Sprite):
@@ -216,6 +208,8 @@ def main():
     # Used to manage how fast the screen updates
     clock = pygame.time.Clock()
  
+    
+
     # -------- Main Program Loop -----------
     while not done:
         for event in pygame.event.get():
@@ -223,18 +217,16 @@ def main():
                 done = True
  
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    player.go_left()
-                if event.key == pygame.K_RIGHT:
-                    player.go_right()
                 if event.key == pygame.K_UP:
                     player.jump()
+
+                if event.key == pygame.K_DOWN:
+                    player.duck()
+                
  
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT and player.change_x < 0:
-                    player.stop()
-                if event.key == pygame.K_RIGHT and player.change_x > 0:
-                    player.stop()
+                if event.key == pygame.K_DOWN:
+                    player.unDuck()
  
         # Update the player.
         active_sprite_list.update()
