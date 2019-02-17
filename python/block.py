@@ -6,7 +6,7 @@ BLACK = (  0,   0,   0)
 WHITE = (255, 255, 255)
 RED   = (255,   0,   0)
 
-class Car(pygame.sprite.Sprite):
+class Block(pygame.sprite.Sprite):
 
    def __init__(self, color, width, height):
     
