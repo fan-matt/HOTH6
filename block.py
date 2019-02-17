@@ -25,14 +25,3 @@ class Block(pygame.sprite.Sprite):
        # Fetch the rectangle object that has the dimensions of the image
        # Update the position of this object by setting the values of rect.x and rect.y
         self.rect = self.image.get_rect()
-
-        self.change_x = 0
-
-    def changespeed(self, elapsed_time):
-        self.change_x = self.change_x + elapsed_time
-
-    def update(self):
-        self.rect.x = self.change_x + self.rect.change_x
-    
-        if self.rect.x < 0;
-            self.remove(self.rect)
