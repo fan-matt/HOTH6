@@ -108,24 +108,23 @@ class Player(pygame.sprite.Sprite):
             self.image = pygame.Surface([width, 25])
             self.image.fill(RED)
     
-            # Set a reference to the image rect.
+            #Set a reference to the image rect.
             self.rect = self.image.get_rect()
 
             self.rect.x = 100
             self.rect.y = SCREEN_HEIGHT - self.rect.height
-            #screen.fill(BLUE)
-        
+            
     def revert(self):
         """ Reverts to normal after ducking. """
         self.image = pygame.Surface([width, height])
         self.image.fill(RED)
- 
+
         # Set a reference to the image rect.
         self.rect = self.image.get_rect()
 
         self.rect.x = 100
         self.rect.y = SCREEN_HEIGHT - self.rect.height
-    
+
     
 class Platform(pygame.sprite.Sprite):
     """ Platform the user can jump on """
@@ -217,7 +216,7 @@ class Level_01(Level):
         block = MovingPlatform(50, 50)
         block.rect.x = 800
         block.rect.y = 550
-        block.boundary_left = -50
+        block.boundary_left = 0
         block.boundary_right = 800
         block.change_x = 5
         block.player = self.player
