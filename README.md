@@ -11,4 +11,6 @@ Our submission for ACM Hack's <strong>H</strong>ack <strong>O</strong>n <strong>
 
 We wanted to create delve into the world of ML while also creating something enjoyable for the end user. 
 
-This is a game where the player creates levels for the character to train on
+This is a game where the player creates levels for the character to train on and then tests them on a "Campaign" mode.
+
+Built using Python3 and PyGame
