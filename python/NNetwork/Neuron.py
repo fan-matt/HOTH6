@@ -68,5 +68,6 @@ class Neuron:
         print("Activation: " + str(self.activation))
         print("Bias: " + str(self.bias))
         print("Connections: ")
-        print(self.connections)
+        for i in self.connections:
+            i.print()
         print()
