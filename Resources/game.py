@@ -27,14 +27,11 @@ class Player(pygame.sprite.Sprite):
  
         # Create an image of the block, and fill it with a color.
         # This could also be an image loaded from the disk.
-<<<<<<< HEAD
         self.width = 50
         self.height = 50
         self.image = pygame.Surface([self.width, self.height])
-=======
         
         self.image = pygame.Surface([width, height])
->>>>>>> fc9b989b8ba482bd627959ea16b16d3f57673d71
         self.image.fill(RED)
  
         # Set a reference to the image rect.
@@ -126,24 +123,23 @@ class Player(pygame.sprite.Sprite):
             self.image = pygame.Surface([width, 25])
             self.image.fill(RED)
     
-            # Set a reference to the image rect.
+            #Set a reference to the image rect.
             self.rect = self.image.get_rect()
 
             self.rect.x = 100
             self.rect.y = SCREEN_HEIGHT - self.rect.height
-            #screen.fill(BLUE)
-        
+            
     def revert(self):
         """ Reverts to normal after ducking. """
         self.image = pygame.Surface([width, height])
         self.image.fill(RED)
- 
+
         # Set a reference to the image rect.
         self.rect = self.image.get_rect()
 
         self.rect.x = 100
         self.rect.y = SCREEN_HEIGHT - self.rect.height
-    
+
     
 class Platform(pygame.sprite.Sprite):
     """ Platform the user can jump on """
@@ -264,7 +260,7 @@ class Level_01(Level):
         block = MovingPlatform(50, 50)
         block.rect.x = 800
         block.rect.y = 550
-        block.boundary_left = -50
+        block.boundary_left = 0
         block.boundary_right = 800
         block.change_x = 5
         block.player = self.player
@@ -401,16 +397,6 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     player.jump()
-<<<<<<< HEAD
-
-                if event.key == pygame.K_DOWN:
-                    player.duck()
-                
- 
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_DOWN:
-                    player.unDuck()
-=======
                 if event.key == pygame.K_DOWN:
                     player.duck()
  
@@ -423,7 +409,6 @@ def main():
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_DOWN:
                     player.revert()
->>>>>>> fc9b989b8ba482bd627959ea16b16d3f57673d71
  
         # Update the player.
         active_sprite_list.update()
