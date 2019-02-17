@@ -1,13 +1,8 @@
-from Layer import Layer
+from NNetwork import NNetwork
 
-inputLayer = Layer(1)
+myNetwork = NNetwork([2 , 2])
 
-hidden = Layer(1)
-
-inputLayer.setInput([2])
-inputLayer.connect(hidden)
-inputLayer.propagate()
-hidden.propagate()
-
-inputLayer.print()
-hidden.print()
+myNetwork.setInput([5 , 2])
+myNetwork.propagate()
+myNetwork.print()
+print(myNetwork.getOutput())

@@ -1,5 +1,4 @@
 import pygame
-import random
 
 
 # Define some colors
@@ -34,5 +33,5 @@ class Block(pygame.sprite.Sprite):
     def update(self):
         self.rect.x = self.change_x + self.rect.change_x
     
-        if self.rect.x < 0;
+        if self.rect.x < 0
             self.remove(self.rect)
