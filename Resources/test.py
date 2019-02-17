@@ -1,49 +1,60 @@
-#print('Hello World')
-
 import pygame, sys
 from pygame.locals import *
 
+
 pygame.init()
 
-FPS = 75 # frames per second setting
+FPS = 60 # frames per second setting
 fpsClock = pygame.time.Clock()
 
-# set up the window
-DISPLAYSURF = pygame.display.set_mode((400, 300), 0, 32)
-pygame.display.set_caption('Animation')
+# Set up the window
+screen_width = 1000
+screen_height = 700
+display = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption('Game')
 
+# Colors
+BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
+BLUE = (0, 0, 255)
 WHITE = (255, 255, 255)
-catImg = pygame.image.load('cat.png')
-catx = 10
-caty = 10
-direction = 'right'
 
-while True: # the main game loop
-    DISPLAYSURF.fill(WHITE)
+background=pygame.image.load('white.png')
+sprite=pygame.image.load('cat.png')
+spritex=300
+spritey=300
+direction='right'
 
-    if direction == 'right':
-        catx += 5
-        if catx == 280:
-            direction = 'down'
-    elif direction == 'down':
-        caty += 5
-        if caty == 220:
-            direction = 'left'
-    elif direction == 'left':
-        catx -= 5
-        if catx == 10:
-            direction = 'up'
-    elif direction == 'up':
-        caty -= 5
-        if caty == 10:
-            direction = 'right'
+while True:
+    display.blit(background,(0,0))
 
-    DISPLAYSURF.blit(catImg, (catx, caty))
+    display.blit(sprite,(spritex,spritey))
 
+    # for event in pygame.event.get():
+    #     # if event.type==QUIT:
+    #     #     pygame.quit()
+    #     #     sys.exit()
+
+    #     if event.type == KEYDOWN:
+    #         if (event.key == pygame.K_LEFT):
+    #             sprite=pygame.image.load('left.png')
+    #         elif (event.key == pygame.K_RIGHT):
+    #             sprite=pygame.image.load('right.png')
+    #         elif (event.key == pygame.K_UP):
+    #             sprite=pygame.image.load('up.png')
+    #         elif (event.key == pygame.K_DOWN):
+    #             sprite=pygame.image.load('down.png')
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-
+        
+        if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    spritex -= 5
+                if event.key == pygame.K_RIGHT:
+                    spritex += 5
+        
     pygame.display.update()
     fpsClock.tick(FPS)
