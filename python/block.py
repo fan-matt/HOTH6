@@ -8,7 +8,7 @@ RED   = (255,   0,   0)
 
 class Block(pygame.sprite.Sprite):
 
-   def __init__(self, color, width, height):
+    def __init__(self, color, width, height):
     
     # Call the parent class (Sprite) constructor
         super().__init__()
@@ -33,5 +33,5 @@ class Block(pygame.sprite.Sprite):
     def update(self):
         self.rect.x = self.change_x + self.rect.change_x
     
-        if self.rect.x < 0
+        if self.rect.x < 0:
             self.remove(self.rect)
