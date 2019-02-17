@@ -1,6 +1,6 @@
 import pygame
-
 from Platform import Platform
+
 
 class MovingPlatform(Platform):
     """ This is a fancier platform that can actually move. """

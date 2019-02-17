@@ -22,23 +22,23 @@ class Level_01(Level):
             block.rect.y = platform[3]
             block.player = self.player
             self.platform_list.add(block)
-
-        block = MovingPlatform(50, 50)
-        block.rect.x = 800
-        block.rect.y = 550
-        block.boundary_left = -50
-        block.boundary_right = 800
-        block.change_x = 5
-        block.player = self.player
-        block.level = self
-        self.platform_list.add(block)
-
-        block1 = MovingPlatform(50, 50)
-        block1.rect.x = 1050
-        block1.rect.y = 525
+        
+        block1 = MovingPlatform(25, 50)
+        block1.rect.x = 800
+        block1.rect.y = 550
         block1.boundary_left = -50
-        block1.boundary_right = 1050
+        block1.boundary_right = 800
         block1.change_x = 5
         block1.player = self.player
         block1.level = self
         self.platform_list.add(block1)
+
+        block2 = MovingPlatform(25, 50)
+        block2.rect.x = 1050
+        block2.rect.y = 525
+        block2.boundary_left = -50
+        block2.boundary_right = 1050
+        block2.change_x = 5
+        block2.player = self.player
+        block2.level = self
+        self.platform_list.add(block2)
