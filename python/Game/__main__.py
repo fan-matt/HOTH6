@@ -4,6 +4,8 @@ import consts
 
 from Player import Player
 from Level_01 import Level_01
+from MenuScreen import MenuScreen
+
 
 
 def main():
@@ -42,7 +44,10 @@ def main():
     # Used to manage how fast the screen updates
     clock = pygame.time.Clock()
  
-    
+    menuScreen = MenuScreen(screen , clock)
+
+    menuScreen.show()
+
 
     # -------- Main Program Loop -----------
     while not done:
