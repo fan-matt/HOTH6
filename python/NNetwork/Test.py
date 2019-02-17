@@ -1,8 +1,13 @@
-from Neuron import Neuron
+from Layer import Layer
 
-myNeuron = Neuron()
+inputLayer = Layer(1)
 
-myNeuron.addConnection(Neuron())
-myNeuron.addConnection(Neuron())
-myNeuron.addConnection(Neuron())
-myNeuron.print()
+hidden = Layer(1)
+
+inputLayer.setInput([2])
+inputLayer.connect(hidden)
+inputLayer.propagate()
+hidden.propagate()
+
+inputLayer.print()
+hidden.print()

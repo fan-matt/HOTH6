@@ -40,8 +40,8 @@ class Neuron:
     # and sets the activation to the output of the sigmoid
     #
     # Call this AFTER all necessary propagation is done!
-    def activate(self , input):
-        self.activation = self.sigmoid(input - self.bias)
+    def activate(self):
+        self.activation = self.sigmoid(self.rawInput - self.bias)
 
 
     # Standard sigmoid function
