@@ -63,6 +63,25 @@ class Neuron:
             i.neuron.addToRawInput(self.activation * i.weight)
 
 
+    def getAllValues(self):
+        values = []
+
+        for i in self.connections:
+            values += [i.weight]
+            
+        values += [self.bias]
+
+        return values
+
+    
+    def setAllValues(self , values):
+        for i in range(len(self.connections)):
+            self.connections[i].weight = values[i]
+        
+        bias = values[len(values) - 1]
+
+
+
     # Prints out all the properties of the neuron
     def print(self):
         print("-- Neuron -- ")

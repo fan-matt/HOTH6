@@ -18,7 +18,6 @@ def collisionHandler(players , obstacles , score):
         for j in obstacles:
             if pygame.sprite.collide_rect(i , j):
                 i.kill()
-                i.fitness = score
                 return True
 
     return False
@@ -45,6 +44,62 @@ def getNNInputs(player , obstacles):
     print((deltaX , nextY , obstacleType , playerY))
 
     return (deltaX , nextY , obstacleType , playerY)
+
+
+def nextGen(players , playerGroup , genCounter , scoreCounter):
+    for i in players:
+        i.kill()
+
+    genCounter.addTo()
+    genCounter.updateCounter()
+
+    players.sort(key = lambda x: x.fitness)
+
+    print("Fitness")
+    for i in players:
+        print(i.fitness)
+
+    # Kill bottom 25
+    players = players[:25]
+
+    survivalLen = len(players)
+    for i in range(survivalLen - 1):
+        average = []
+        for j in range(len(players[i].nnetwork.getAllValues())):
+            print(players[i].nnetwork.getAllValues()[j])
+            average.append((players[i].nnetwork.getAllValues()[j] + players[i + 1].nnetwork.getAllValues()[j]) / 2)
+
+        newPlayer = Player()
+        newPlayer.nnetwork.setAllValues(average)
+        newPlayer.rect.x = 100
+        newPlayer.rect.y = consts.SCREEN_HEIGHT - newPlayer.rect.height
+
+        playerGroup.add(newPlayer)
+    
+    newPlayer = Player()
+    newPlayer.rect.x = 100
+    newPlayer.rect.y = consts.SCREEN_HEIGHT - newPlayer.rect.height
+    playerGroup.add(newPlayer)
+
+    # Mutate offspring
+    # Add a random one
+
+    wait = True
+
+    while wait:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
+ 
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    wait = False
+
+    scoreCounter.reset()
+    scoreCounter.updateCounter()
+    genCounter.updateCounter()
+
+    return playerGroup
 
 
 def main():
@@ -100,13 +155,7 @@ def main():
         if(len(players.sprites()) > 0):
             scoreCounter.addTo()
         scoreCounter.updateCounter()
-<<<<<<< HEAD
         
-=======
-
-        #print(scoreCounter.get())
-
->>>>>>> 59a7699c13a9b94161f0da524e6e7c670e079c19
         
         numGreenBlocks = len(obstacles.sprites())
         if scoreCounter.get() - startTimer > interval:
@@ -129,19 +178,14 @@ def main():
             if event.type == pygame.QUIT:
                 done = True
  
-            # if event.type == pygame.KEYDOWN:
-            #     if event.key == pygame.K_UP:
-            #         player.jump()
-            #     if event.key == pygame.K_DOWN:
-            #         player.duck()
-            
-            # if event.type == pygame.KEYUP:
-            #     if event.key == pygame.K_DOWN:
-            #         player.unDuck()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    players = nextGen(players.sprites() , players , genCounter , scoreCounter)
  
 
         for i in range(len(players.sprites())):
             players.sprites()[i].update(getNNInputs(players.sprites()[i] , obstacles.sprites()))
+            players.sprites()[i].fitness = scoreCounter.get()
 
 
         obstacles.update()
