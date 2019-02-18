@@ -1,5 +1,9 @@
 import pygame
 import consts
+import sys
+sys.path.append('./../NNetwork')
+from NNetwork import NNetwork
+
 
 class Player(pygame.sprite.Sprite):
     """ This class represents the rectangle the player controls. """
@@ -28,6 +32,10 @@ class Player(pygame.sprite.Sprite):
 
         self.onGround = True
         self.jumpRequested = False
+
+        self.nnetwork = NNetwork((4 , 4 , 3))
+
+        self.fitness = 0
         
  
     def setPos(self , x , y):
@@ -35,7 +43,19 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = y
 
 
-    def update(self):
+    def update(self , inputs):
+        self.nnetwork.setInput(inputs)
+        self.nnetwork.propagate()
+        output = self.nnetwork.getOutput()
+
+        if output == 0:
+            self.jump()
+        elif output == 1:
+            self.duck()
+        else:
+            pass
+
+
         if self.rect.y >= (consts.SCREEN_HEIGHT - self.currentHeight) and not self.jumpRequested:
             self.onGround = True
             self.rect.y = consts.SCREEN_HEIGHT - self.currentHeight

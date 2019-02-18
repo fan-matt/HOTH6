@@ -11,15 +11,38 @@ from TextObject import TextObject
 
 
 
-def checkCollision(players , obstacles):
+def checkCollision(players , obstacles , score):
     for i in players:
         for j in obstacles:
             if pygame.sprite.collide_rect(i , j):
                 i.kill()
+                i.fitness = score
                 return True
 
     return False
 
+
+def getNNInputs(player , obstacles):
+    if len(obstacles) >= 1:
+        deltaX = obstacles[0].rect.x - player.rect.x
+        nextY = obstacles[0].rect.y
+
+    # This is when the obstacle passes but hasn't been killed yet
+    elif len(obstacles) >= 2 and obstacles[0].rect.x - player.rect.x < 0:
+        deltaX = obstacles[1].rect.x - player.rect.x
+        nextY = obstacles[1].rect.y
+    
+    else:
+        deltaX = 0
+        nextY = 0
+
+    obstacleType = 1
+
+    playerY = player.rect.y
+
+    print((deltaX , nextY , obstacleType , playerY))
+
+    return (deltaX , nextY , obstacleType , playerY)
 
 
 def main():
@@ -31,9 +54,7 @@ def main():
     screen = pygame.display.set_mode(size)
  
     pygame.display.set_caption("Platformer Jumper")
- 
-    # Create the player
-    player = Player()
+
  
     # Create all the levels
     background = Background()
@@ -46,10 +67,12 @@ def main():
 
 
     players = pygame.sprite.Group()
- 
-    player.rect.x = 100
-    player.rect.y = consts.SCREEN_HEIGHT - player.rect.height
-    players.add(player)
+    for i in range(50):
+        tempPlayer = Player()
+        tempPlayer.rect.x = 100
+        tempPlayer.rect.y = consts.SCREEN_HEIGHT - tempPlayer.rect.height
+
+        players.add(tempPlayer)
 
     scoreCounter = ScoreCounter(100 , 100 , screen)
     
@@ -78,23 +101,25 @@ def main():
             if event.type == pygame.QUIT:
                 done = True
  
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    player.jump()
-                if event.key == pygame.K_DOWN:
-                    player.duck()
+            # if event.type == pygame.KEYDOWN:
+            #     if event.key == pygame.K_UP:
+            #         player.jump()
+            #     if event.key == pygame.K_DOWN:
+            #         player.duck()
             
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_DOWN:
-                    player.unDuck()
+            # if event.type == pygame.KEYUP:
+            #     if event.key == pygame.K_DOWN:
+            #         player.unDuck()
  
 
-        # Update the player.
-        players.update()
+        for i in range(len(players.sprites())):
+            players.sprites()[i].update(getNNInputs(players.sprites()[i] , obstacles.sprites()))
+
+
         obstacles.update()
  
 
-        checkCollision(players.sprites() , obstacles.sprites())
+        checkCollision(players.sprites() , obstacles.sprites() , scoreCounter.get())
 
 
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
