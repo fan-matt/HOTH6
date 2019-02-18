@@ -5,6 +5,8 @@ import consts
 from Player import Player
 from Level_01 import Level_01
 from MenuScreen import MenuScreen
+from BlockPlatform import BlockPlatform
+
 
 
 
@@ -29,12 +31,18 @@ def main():
     current_level_no = 0
     current_level = level_list[current_level_no]
  
-    active_sprite_list = pygame.sprite.Group()
+    obstacles = pygame.sprite.Group()
+    obstacles.add(BlockPlatform(500 , 300 , 4))
+    obstacles.add(BlockPlatform(400 , 300 , 4))
+    obstacles.add(BlockPlatform(600 , 300 , 4))
+
+
+    players = pygame.sprite.Group()
     player.level = current_level
  
     player.rect.x = 100
     player.rect.y = consts.SCREEN_HEIGHT - player.rect.height
-    active_sprite_list.add(player)
+    players.add(player)
 
 
  
@@ -61,12 +69,6 @@ def main():
                     player.jump()
                 if event.key == pygame.K_DOWN:
                     player.duck()
- 
-            # if event.type == pygame.KEYUP:
-            #     if event.key == pygame.K_LEFT and player.change_x < 0:
-            #         player.stop()
-            #     if event.key == pygame.K_RIGHT and player.change_x > 0:
-            #         player.stop()
             
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_DOWN:
@@ -74,7 +76,8 @@ def main():
  
 
         # Update the player.
-        active_sprite_list.update()
+        players.update()
+        obstacles.update()
  
         # Update items in the level
         current_level.update()
@@ -89,7 +92,8 @@ def main():
  
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
         current_level.draw(screen)
-        active_sprite_list.draw(screen)
+        players.draw(screen)
+        obstacles.draw(screen)
  
         # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
  
@@ -98,6 +102,10 @@ def main():
  
         # Go ahead and update the screen with what we've drawn.
         pygame.display.flip()
+
+
+        print(obstacles.sprites())
+
  
     # Be IDLE friendly. If you forget this line, the program will 'hang'
     # on exit.

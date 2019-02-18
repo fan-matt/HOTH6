@@ -12,3 +12,7 @@ SCREEN_HEIGHT = 600
 # Player dimensions
 width = 50
 height = 50
+
+# Obstacle dimensions
+PLAT_WIDTH = 25
+PLAT_HEIGHT = 50
