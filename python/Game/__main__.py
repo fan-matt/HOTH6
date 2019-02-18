@@ -3,10 +3,20 @@ import random
 import consts
 
 from Player import Player
-from Level_01 import Level_01
+from Background import Background
 from MenuScreen import MenuScreen
 from BlockPlatform import BlockPlatform
 
+
+
+def checkCollision(players , obstacles):
+    for i in players:
+        for j in obstacles:
+            if pygame.sprite.collide_rect(i , j):
+                i.kill()
+                return True
+
+    return False
 
 
 
@@ -24,21 +34,16 @@ def main():
     player = Player()
  
     # Create all the levels
-    level_list = []
-    level_list.append( Level_01(player) )
- 
-    # Set the current level
-    current_level_no = 0
-    current_level = level_list[current_level_no]
+    background = Background()
+
  
     obstacles = pygame.sprite.Group()
-    obstacles.add(BlockPlatform(500 , 300 , 4))
-    obstacles.add(BlockPlatform(400 , 300 , 4))
-    obstacles.add(BlockPlatform(600 , 300 , 4))
+    obstacles.add(BlockPlatform(500 , 500 , 4))
+    obstacles.add(BlockPlatform(400 , 500 , 4))
+    obstacles.add(BlockPlatform(600 , 500 , 4))
 
 
     players = pygame.sprite.Group()
-    player.level = current_level
  
     player.rect.x = 100
     player.rect.y = consts.SCREEN_HEIGHT - player.rect.height
@@ -72,39 +77,29 @@ def main():
             
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_DOWN:
-                    player.revert()
+                    player.unDuck()
  
 
         # Update the player.
         players.update()
         obstacles.update()
  
-        # Update items in the level
-        current_level.update()
- 
-        # If the player gets near the right side, shift the world left (-x)
-        if player.rect.right > consts.SCREEN_WIDTH:
-            player.rect.right = consts.SCREEN_WIDTH
- 
-        # If the player gets near the left side, shift the world right (+x)
-        if player.rect.left < 0:
-            player.rect.left = 0
- 
+
+        checkCollision(players.sprites() , obstacles.sprites())
+
+
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
-        current_level.draw(screen)
+        background.draw(screen)
         players.draw(screen)
         obstacles.draw(screen)
  
         # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
  
         # Limit to 60 frames per second
-        clock.tick(60)
+        clock.tick(consts.FPS)
  
         # Go ahead and update the screen with what we've drawn.
         pygame.display.flip()
-
-
-        print(obstacles.sprites())
 
  
     # Be IDLE friendly. If you forget this line, the program will 'hang'

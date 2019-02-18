@@ -16,3 +16,5 @@ height = 50
 # Obstacle dimensions
 PLAT_WIDTH = 25
 PLAT_HEIGHT = 50
+
+FPS = 60
