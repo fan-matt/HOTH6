@@ -1,6 +1,7 @@
 import pygame
 import random
 import consts
+import time
 
 from Player import Player
 from Background import Background
@@ -61,11 +62,11 @@ def main():
 
  
     obstacles = pygame.sprite.Group()
-    obstacles.add(BlockPlatform(500 , 500 , 4))
-    obstacles.add(BlockPlatform(400 , 500 , 4))
-    obstacles.add(BlockPlatform(600 , 500 , 4))
-
-
+    obstacles.add(BlockPlatform(800 , 500 , 4))
+    obstacles.add(BlockPlatform(1000 , 550 , 4))
+    obstacles.add(BlockPlatform(1200 , 525 , 4))
+    obstacles.add(BlockPlatform(1400 , 500 , 4))
+    #obstacles.add(BlockPlatform(1600 , 525 , 4))
     players = pygame.sprite.Group()
     for i in range(50):
         tempPlayer = Player()
@@ -75,8 +76,6 @@ def main():
         players.add(tempPlayer)
 
     scoreCounter = ScoreCounter(100 , 100 , screen)
-    
-
  
     # Loop until the user clicks the close button.
     done = False
@@ -91,12 +90,25 @@ def main():
 
     # -------- Main Program Loop -----------
     while not done:
-        
-        scoreCounter.addTo()
+
+        if(len(players.sprites()) > 0):
+            scoreCounter.addTo()
         scoreCounter.updateCounter()
 
         print(scoreCounter.get())
-
+        
+        numGreenBlocks = len(obstacles.sprites())
+        if numGreenBlocks < 4:
+            generatedNum = random.randint(1,3)
+            randomNum = 0
+            if generatedNum == 1:
+                randomNum = 500
+            if generatedNum == 2:
+                randomNum = 525
+            if generatedNum == 3:
+                randomNum = 550
+            obstacles.add(BlockPlatform(800 , randomNum , 4))
+    
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
