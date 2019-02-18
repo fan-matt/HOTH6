@@ -6,6 +6,8 @@ from Player import Player
 from Background import Background
 from MenuScreen import MenuScreen
 from BlockPlatform import BlockPlatform
+from ScoreCounter import ScoreCounter
+from TextObject import TextObject
 
 
 
@@ -49,6 +51,8 @@ def main():
     player.rect.y = consts.SCREEN_HEIGHT - player.rect.height
     players.add(player)
 
+    scoreCounter = ScoreCounter(100 , 100 , screen)
+    
 
  
     # Loop until the user clicks the close button.
@@ -65,6 +69,11 @@ def main():
     # -------- Main Program Loop -----------
     while not done:
         
+        scoreCounter.addTo()
+        scoreCounter.updateCounter()
+
+        print(scoreCounter.get())
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
