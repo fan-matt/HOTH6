@@ -60,13 +60,14 @@ def main():
     # Create all the levels
     background = Background()
 
+    blockSpeed = 4.5
  
     obstacles = pygame.sprite.Group()
-    obstacles.add(BlockPlatform(800 , 500 , 4))
-    obstacles.add(BlockPlatform(1000 , 550 , 4))
-    obstacles.add(BlockPlatform(1200 , 525 , 4))
-    obstacles.add(BlockPlatform(1400 , 500 , 4))
-    #obstacles.add(BlockPlatform(1600 , 525 , 4))
+    # obstacles.add(BlockPlatform(800 , 500 , blockSpeed))
+    # obstacles.add(BlockPlatform(1200 , 550 , blockSpeed))
+    # obstacles.add(BlockPlatform(1600 , 525 , blockSpeed))
+    # obstacles.add(BlockPlatform(2000 , 500 , blockSpeed))
+    # #obstacles.add(BlockPlatform(1600 , 525 , blockSpeed))
     players = pygame.sprite.Group()
     for i in range(50):
         tempPlayer = Player()
@@ -87,6 +88,8 @@ def main():
 
     menuScreen.show()
 
+    startTimer = 0
+    interval = 50
 
     # -------- Main Program Loop -----------
     while not done:
@@ -95,10 +98,11 @@ def main():
             scoreCounter.addTo()
         scoreCounter.updateCounter()
 
-        print(scoreCounter.get())
+        #print(scoreCounter.get())
+
         
         numGreenBlocks = len(obstacles.sprites())
-        if numGreenBlocks < 4:
+        if scoreCounter.get() - startTimer > interval:
             generatedNum = random.randint(1,3)
             randomNum = 0
             if generatedNum == 1:
@@ -107,7 +111,12 @@ def main():
                 randomNum = 525
             if generatedNum == 3:
                 randomNum = 550
-            obstacles.add(BlockPlatform(800 , randomNum , 4))
+            obstacles.add(BlockPlatform(800 , randomNum , blockSpeed))
+            startTimer = scoreCounter.get()
+            interval += 0.25
+            blockSpeed += 0.2
+            print(blockSpeed)
+        
     
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
