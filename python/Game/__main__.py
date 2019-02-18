@@ -66,7 +66,9 @@ def main():
 
     # -------- Main Program Loop -----------
     while not done:
-        scoreCounter.addTo()
+
+        if(len(players.sprites()) > 0):
+            scoreCounter.addTo()
         scoreCounter.updateCounter()
 
         print(scoreCounter.get())
@@ -103,7 +105,9 @@ def main():
         obstacles.update()
  
 
-        checkCollision(players.sprites() , obstacles.sprites())
+        checkCollision(players.sprites(), obstacles.sprites())
+        
+        
 
 
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
