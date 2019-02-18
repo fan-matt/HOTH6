@@ -42,6 +42,24 @@ class NNetwork:
 
         return maxIndex
 
+
+    def getAllValues(self):
+        values = []
+
+        for i in self.layers:
+            values += i.getAllValues()
+
+        return values
+
+
+    def setAllValues(self , values):
+        currentArray = values
+
+        for i in range(len(self.layers) - 1):
+            spliceIndex = self.layers[i].size + self.layers[i].size * self.layers[i + 1].size
+            self.layers[i].setAllValues(currentArray[:spliceIndex])
+            currentArray = currentArray[spliceIndex:]
+
     
     # Prints out the NN and all its properties and layers
     def print(self):

@@ -34,6 +34,24 @@ class Layer:
             self.neurons[i].addToRawInput(inputs[i])
 
 
+    def getAllValues(self):
+        values = []
+
+        for i in self.neurons:
+            values += i.getAllValues()
+
+        return values
+
+    
+    def setAllValues(self , values):
+        currentArray = values
+
+        for i in range(len(self.neurons)):
+            spliceIndex = 1 + len(self.neurons[i].connections)
+            self.neurons[i].setAllValues(currentArray[:spliceIndex])
+            currentArray = currentArray[spliceIndex:]
+
+
     # Prints all properties of this layer and its Neurons
     def print(self):
         print("-- Layer --")
