@@ -8,11 +8,12 @@ from Background import Background
 from MenuScreen import MenuScreen
 from BlockPlatform import BlockPlatform
 from ScoreCounter import ScoreCounter
+from GenerationCounter import GenerationCounter
 from TextObject import TextObject
 
 
 
-def checkCollision(players , obstacles , score):
+def collisionHandler(players , obstacles , score):
     for i in players:
         for j in obstacles:
             if pygame.sprite.collide_rect(i , j):
@@ -76,6 +77,8 @@ def main():
         players.add(tempPlayer)
 
     scoreCounter = ScoreCounter(100 , 100 , screen)
+    genCounter = GenerationCounter(500 , 100 , screen)
+    genCounter.updateCounter()      # go ahead and show right away
  
     # Loop until the user clicks the close button.
     done = False
@@ -94,8 +97,7 @@ def main():
         if(len(players.sprites()) > 0):
             scoreCounter.addTo()
         scoreCounter.updateCounter()
-
-        print(scoreCounter.get())
+        
         
         numGreenBlocks = len(obstacles.sprites())
         if numGreenBlocks < 4:
@@ -131,7 +133,7 @@ def main():
         obstacles.update()
  
 
-        checkCollision(players.sprites() , obstacles.sprites() , scoreCounter.get())
+        collisionHandler(players.sprites() , obstacles.sprites() , scoreCounter.get())
 
 
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
