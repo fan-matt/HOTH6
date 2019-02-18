@@ -62,16 +62,17 @@ def main():
                 if event.key == pygame.K_DOWN:
                     player.duck()
  
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT and player.change_x < 0:
-                    player.stop()
-                if event.key == pygame.K_RIGHT and player.change_x > 0:
-                    player.stop()
+            # if event.type == pygame.KEYUP:
+            #     if event.key == pygame.K_LEFT and player.change_x < 0:
+            #         player.stop()
+            #     if event.key == pygame.K_RIGHT and player.change_x > 0:
+            #         player.stop()
             
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_DOWN:
                     player.revert()
  
+
         # Update the player.
         active_sprite_list.update()
  

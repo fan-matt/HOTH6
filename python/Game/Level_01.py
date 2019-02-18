@@ -2,6 +2,7 @@ import pygame
 from Level import Level
 from Platform import Platform
 from MovingPlatform import MovingPlatform
+import random
 
 
 class Level_01(Level):
@@ -22,7 +23,7 @@ class Level_01(Level):
             block.rect.y = platform[3]
             block.player = self.player
             self.platform_list.add(block)
-        
+            
         block1 = MovingPlatform(25, 50)
         block1.rect.x = 800
         block1.rect.y = 550
@@ -31,7 +32,7 @@ class Level_01(Level):
         block1.change_x = 5
         block1.player = self.player
         block1.level = self
-        self.platform_list.add(block1)
+        self.platform_list.add(block1)        
 
         block2 = MovingPlatform(25, 50)
         block2.rect.x = 1050
@@ -41,4 +42,5 @@ class Level_01(Level):
         block2.change_x = 5
         block2.player = self.player
         block2.level = self
-        self.platform_list.add(block2)
+        self.platform_list.add(block2)        
+
