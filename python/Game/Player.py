@@ -54,8 +54,9 @@ class Player(pygame.sprite.Sprite):
 
  
     def jump(self):
-        self.jumpRequested = True
-        self.velocity = -900
+        if self.onGround:
+            self.jumpRequested = True
+            self.velocity = -900
 
         
     def duck(self):
