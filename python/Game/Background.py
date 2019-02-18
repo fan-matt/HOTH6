@@ -8,4 +8,5 @@ class Background:
 
         
     def draw(self, screen):
-        screen.fill(consts.BLUE)
+        background_image = pygame.image.load("menu.png").convert()
+        screen.blit(background_image, [0,0])
